@@ -1,0 +1,105 @@
+HTML CODE :-
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insertion Sort Visualization</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container">
+  <h1>Insertion Sort Visualization</h1>
+  <div id="array-container" class="array-container"></div>
+  <button onclick="startInsertionSort()">Sort Array</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+CSS CODE :-
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  .container {
+    text-align: center;
+  }
+  
+  .array-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+  
+  .bar {
+    width: 20px;
+    margin: 2px;
+    background-color: #3498db;
+    display: inline-block;
+    text-align: center;
+    color: white;
+  }
+
+
+JS CODE:-
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  async function insertionSort() {
+    const array = document.querySelectorAll('.bar');
+  
+    for (let i = 1; i < array.length; i++) {
+      let key = parseInt(array[i].innerText);
+      let j = i - 1;
+  
+      array[i].style.backgroundColor = '#e74c3c';
+  
+      await delay(300);
+  
+      while (j >= 0 && parseInt(array[j].innerText) > key) {
+        array[j].style.backgroundColor = '#e74c3c';
+        array[j + 1].innerText = array[j].innerText;
+        j--;
+  
+        await delay(300);
+  
+        for (let k = 0; k <= i; k++) {
+          array[k].style.backgroundColor = '#3498db';
+        }
+      }
+  
+      array[j + 1].innerText = key;
+      array[i].style.backgroundColor = '#3498db';
+    }
+  }
+  
+  function startInsertionSort() {
+    const arrayContainer = document.getElementById('array-container');
+    arrayContainer.innerHTML = '';
+  
+    const array = [];
+    for (let i = 0; i < 10; i++) {
+      const value = Math.floor(Math.random() * 100) + 20;
+      const bar = document.createElement('div');
+      bar.innerText = value;
+      bar.style.height = `${value}px`;
+      bar.className = 'bar';
+      array.push(bar);
+      arrayContainer.appendChild(bar);
+    }
+  
+    insertionSort();
+  }
+  
